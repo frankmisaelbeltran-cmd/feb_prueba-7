@@ -38,11 +38,13 @@ function attachMusicInteractionFallback() {
   const unlock = () => {
     startMusicIfPossible();
     document.removeEventListener("click", unlock);
+    document.removeEventListener("pointerdown", unlock);
     document.removeEventListener("touchstart", unlock);
     document.removeEventListener("keydown", unlock);
   };
 
   document.addEventListener("click", unlock, { passive: true });
+  document.addEventListener("pointerdown", unlock, { passive: true });
   document.addEventListener("touchstart", unlock, { passive: true });
   document.addEventListener("keydown", unlock);
 }
@@ -95,6 +97,7 @@ function typeText() {
 }
 
 book.addEventListener("click", () => {
+  startMusicIfPossible();
   book.classList.toggle("open");
 
   if (!started) {
@@ -102,6 +105,9 @@ book.addEventListener("click", () => {
     setTimeout(typeText, 600);
   }
 });
+
+book.addEventListener("pointerdown", startMusicIfPossible, { passive: true });
+book.addEventListener("touchstart", startMusicIfPossible, { passive: true });
 
 if (nextButton) {
   nextButton.addEventListener("click", (event) => {
